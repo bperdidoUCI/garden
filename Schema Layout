@@ -1,0 +1,34 @@
+USER
+{
+  _id: ObjectId,
+  username: String,
+  email: String,
+  password: String, // hashed
+  savedPlants: [ObjectId],        // references to SavedPlant
+  createdAt: Date
+}
+
+
+SAVE PLANT
+{
+  _id: ObjectId,
+  trefleId: String,               // External Trefle plant ID
+  userId: ObjectId,               // ref to User
+  nickname: String,               // "My Aloe", optional
+  location: String,               // optional user field
+  imageUrl: String,               // from Trefle
+  addedAt: Date
+}
+
+
+JOURNAL ENTRY
+{
+  _id: ObjectId,
+  savedPlantId: ObjectId,         // ref to SavedPlant
+  userId: ObjectId,               // redundant but useful
+  date: Date,
+  notes: String,
+  status: String,                 // ex: watered, fertilized, pruned
+  image: String,                  // optional
+  createdAt: Date
+}
