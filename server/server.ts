@@ -9,6 +9,15 @@ import typeDefs from './schemas/typeDefs.js';
 import resolvers from './schemas/resolvers.js';
 import { authMiddleware } from './utils/auth.js';
 
+// Extend Express Request type to include 'user'
+declare global {
+  namespace Express {
+    interface Request {
+      user?: any;
+    }
+  }
+}
+
 config();
 const app = express();
 const PORT = process.env.PORT || 4000;
