@@ -11,110 +11,6 @@ body {
   min-height: 100vh;
 }
 
-/* Header */
-.app-header {
-  background-color: #76c893;
-  padding: 2rem;
-  text-align: center;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.title-header {
-  margin: 0;
-  font-size: 2.5rem;
-  color: #1b3b2f;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 1rem;
-}
-
-.plant-icon {
-  width: 40px;
-  height: 40px;
-}
-
-/* Navigation */
-.app-nav {
-  background-color: #a8e6b1;
-  border-bottom: 4px solid #1b3b2f;
-}
-
-.nav-list {
-  display: flex;
-  justify-content: space-evenly;
-  flex-wrap: wrap;
-  list-style: none;
-  padding: 1rem;
-  margin: 0;
-  cursor: pointer;
-}
-
-.nav-list li {
-  background-color: #a8e6b1;
-  transition: transform 0.2s ease;
-  min-width: 200px;
-  text-align: center;
-  cursor: pointer;
-}
-
-.nav-link {
-  display: block;
-  padding: 0.75rem 1rem;
-  text-decoration: none;
-  color: #1b3b2f;
-  font-weight: bold;
-  width: 100%;
-  height: 100%;
-}
-
-.nav-list li:hover {
-  border: 1px solid #1b3b2f;
-  background-color: #cce5cc;
-  width: 30%;
-  transform: scale(1.5);
-}
-
-/* Search Bar */
-/* 🔍 Search form */
-.search-form {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 2rem auto;
-  gap: 0.5rem;
-  flex-wrap: wrap;
-}
-
-.search-input {
-  padding: 0.6rem 1rem;
-  border: 2px solid #76c893;
-  border-radius: 20px;
-  font-size: 1rem;
-  width: 250px;
-  transition: border-color 0.3s ease;
-}
-
-.search-input:focus {
-  border-color: #3e6640;
-  outline: none;
-}
-
-.search-button {
-  padding: 0.6rem 1.2rem;
-  background-color: #76c893;
-  color: white;
-  border: none;
-  border-radius: 20px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.search-button:hover {
-  background-color: #5da97b;
-}
-
 /* Main Content */
 .app-main {
   flex: 1;
@@ -181,11 +77,20 @@ body {
   max-width: 400px;
 }
 
-/* Footer */
-.app-footer {
-  background-color: #76c893;
+.title-header1{
+  font-size: 1.5rem;
+  color: #3e6640;
+  margin-bottom: 0.5rem;
   text-align: center;
-  padding: 1rem;
-  color: #1b3b2f;
-  font-weight: bold;
+}
+
+.auth-button{
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
 }

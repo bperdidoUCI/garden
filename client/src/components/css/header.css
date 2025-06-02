@@ -1,0 +1,22 @@
+/* Header */
+.app-header {
+  background-color: #76c893;
+  padding: 2rem;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.title-header {
+  margin: 0;
+  font-size: 2.5rem;
+  color: #1b3b2f;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.plant-icon {
+  width: 40px;
+  height: 40px;
+}
