@@ -1,16 +1,12 @@
 import express from 'express';
 import { config } from 'dotenv';
 import cors from 'cors';
-import bodyParser from 'body-parser';
 import { ApolloServer } from 'apollo-server-express';
-import path from 'path';
 import connectDB from './config/db.js';
 import typeDefs from './schemas/typeDefs.js';
 import resolvers from './schemas/resolvers.js';
 import { authMiddleware } from './utils/auth.js';
-import { Parser } from 'graphql/language/parser.js';
 
-// Extend Express Request type to include 'user'
 declare global {
   namespace Express {
     interface Request {
