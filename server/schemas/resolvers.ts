@@ -1,8 +1,23 @@
+import jwt from 'jsonwebtoken';
+import bcrypt from 'bcryptjs';
+import User from '../models/User.js';
 import SavedPlant from '../models/SavedPlant.js';
 import JournalEntry from '../models/JournalEntry.js';
+import { searchPlants } from '../utils/trefleAPI.js';
+
+
+const createToken = (user: any) => {
+  return jwt.sign({ _id: user._id, email: user.email }, process.env.JWT_SECRET!, {
+    expiresIn: "7d", 
+  });
+};
 
 const resolvers = {
   Query: {
+    me: async (_parent: any, _args: any, context: any) => {
+      if (!context.user) return null;
+      return User.findById(context.user._id);
+    },
     getSavedPlantsByUser: async (_parent: any, { userId }: { userId: string }) => {
       return SavedPlant.find({ userId });
     },
@@ -15,9 +30,27 @@ const resolvers = {
     getJournalEntryById: async (_parent: any, { id }: { id: string }) => {
       return JournalEntry.findById(id);
     },
+    searchPlants: async (_parent: any, { query }: { query: string }) => {
+      return searchPlants(query);
+    },
   },
 
   Mutation: {
+    register: async (_parent: any, { username, email, password }: any) => {
+      const existing = await User.findOne({ email });
+      if (existing) throw new Error('User already exists with this email');
+      const user = await User.create({ username, email, password });
+      const token = createToken(user);
+      return { ...user.toObject(), token };
+    },
+    login: async (_parent: any, {email, password }: any) => {
+      const user = await User.findOne({ email });
+      if (!user) throw new Error('User not found');
+      const valid = await user.comparePassword(password);
+      if (!valid) throw new Error('Invalid password');
+      const token = createToken(user);
+      return { ...user.toObject(), token };
+    },
     addSavedPlant: async (_parent: any, { trefleId, nickname, location, imageUrl }: any, context: any) => {
       if (!context.user) throw new Error('Authentication required');
       return SavedPlant.create({
