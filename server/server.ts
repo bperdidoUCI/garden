@@ -6,6 +6,7 @@ import connectDB from './config/db.js';
 import typeDefs from './schemas/typeDefs.js';
 import resolvers from './schemas/resolvers.js';
 import { authMiddleware } from './utils/auth.js';
+import logger from './middleware/logger.js';
 
 declare global {
   namespace Express {
@@ -19,6 +20,7 @@ config();
 const app = express();
 const PORT = process.env.PORT || 4000;
 
+app.use(logger);
 app.use(cors());
 app.use(express.json());
 app.use(authMiddleware);
