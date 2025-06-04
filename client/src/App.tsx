@@ -1,35 +1,40 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+// App.tsx
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Header from './components/header';
+import Nav from './components/navbar';
+import SearchBar from './components/searchbar';
+import PlantCard from './components/plantcard'; // Página com informações da planta
+import About from './components/aboutcard'; // Página sobre
+import Contact from './components/contact'; // Página de contato
+import SignUp from './pages/signup';
+import Login from './pages/login';
+import Favorite from './pages/favorites';
+import Dashboard from './pages/dashboard';
+import './App.css';
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <Router>
+      <Header />
+      <Nav />
+      <SearchBar onSearch={function (): void {
+        throw new Error('Function not implemented.');
+      } } />
+      <div className="app-content">
+        <Routes>
+          {/* navbar routes */}
+          <Route path="/" element={<PlantCard />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+          {/* login routes */}
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/favorites" element={<Favorite />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+        </Routes>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    </Router>
+  );
 }
 
-export default App
+export default App;

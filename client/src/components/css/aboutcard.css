@@ -1,0 +1,30 @@
+.about-container {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    background-color: #f4f4f4;
+}
+
+.title-main1 {
+    font-size: 2em;
+    color: #2e7d32;
+}
+
+.about-section p {
+    font-size: 1.1em;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.about-section h3 {
+    font-size: 1.5em;
+    color: #388e3c;
+    margin-top: 30px;
+}
+
+.app-footer {
+    text-align: center;
+    margin-top: 50px;
+    padding: 10px;
+    background-color: #388e3c;
+    color: #fff;
+}
