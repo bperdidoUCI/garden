@@ -5,8 +5,16 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node dist/server.js",
-    "build": "npm run build --prefix client && npm run build --prefix server"
+    "build": "npm run build --prefix client && npm run build --prefix server",
+    "dev": "concurrently \"npm run dev --prefix server\" \"npm run dev --prefix client\"",
+    "start": "node server/dist/server.js",
+    "start:dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
+
+    "build:client": "cd client && npm run build",
+    "build:server": "cd server && npm run build",
+    "dev-1": "vite --port 10000",
+    "dev:server": "node server/src/index.ts",
+    "dev:client": "cd client && npm run dev"
   },
   "keywords": [],
   "author": "",
@@ -20,7 +28,7 @@
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",
-    "@types/react-router-dom": "^5.3.3"
+    "@types/react-router-dom": "^5.3.3",
+    "concurrently": "^9.1.2"
   }
 }
-

@@ -17,7 +17,7 @@ declare global {
 }
 config();
 const app = express();
-const PORT = process.env.PORT || 4000;
+const PORT = parseInt(process.env.PORT || '10000', 10);
 app.use(logger);
 app.use(cors());
 app.use(express.json());

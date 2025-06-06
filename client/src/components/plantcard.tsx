@@ -3,6 +3,8 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'; // IMPORTANTE
 import Footer from './footer';
 import SearchBar from './searchbar';
+import './css/plantcard.css';
+
 type Plant = {
   image_url: string;
   common_name: string;
