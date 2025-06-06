@@ -79,7 +79,7 @@ export default function PlantCard() {
       <SearchBar onSearch={handleSearch} />
       <header className="app-header header1">
         <div className="header-content1">
-          <h4 className="title-header1">Save your Favorites Searches :heart_eyes:</h4>
+          <h4 className="title-header1">Save your Favorites Searches 😍</h4>
         </div>
         {!isLoggedIn ? (
           <div>
@@ -94,7 +94,7 @@ export default function PlantCard() {
       </header>
       <main className="app-main">
         <section className="plant-section">
-          <h2 className="title-main1">:seedling: Plant of the Day</h2>
+          <h2 className="title-main1">🌱 Plant of the Day</h2>
           {errorMessage && <p>{errorMessage}</p>}
           {plants.length === 0 ? (
             <p>No plants found or error occurred.</p>
