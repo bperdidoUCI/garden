@@ -37,7 +37,7 @@ export default function Favorite({ plant }: Props) {
     }
   };  return (
     <button onClick={handleFavorite}>
-      {isFavorited ? ':broken_heart: Remove from Favorites' : ':heart: Add to Favorites'}
+      {isFavorited ? '💔 Remove from Favorites' : '❤️ Add to Favorites'}
     </button>
   );
 }
