@@ -24,6 +24,11 @@ const userSchema = new Schema<IUser>({
     type: String,
     required: true,
   },
+  // favorite_plants: {
+  //   type: [String],
+  //   required: true,
+  //   default: [],
+  // },
 }, { timestamps: true });
 
 userSchema.pre<IUser>('save', async function (next) {
