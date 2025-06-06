@@ -1,7 +1,6 @@
-import { jokeRouter } from './favoritesRoutes.js';
+//index.ts
+import favoritesRoutes from './favoritesRoutes.js';
 import express from 'express';
 const router = express.Router();
-
-router.use('/jokes', jokeRouter);
-
+router.use('/jokes', favoritesRoutes);
 export default router;
