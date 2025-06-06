@@ -18,8 +18,8 @@ declare global {
 config();
 const app = express();
 const PORT = parseInt(process.env.PORT || '10000', 10);
-app.use(logger);
 app.use(cors());
+app.use(logger);
 app.use(express.json());
 app.use(authMiddleware);
 app.use('/api/favorites', favoriteRoutes);

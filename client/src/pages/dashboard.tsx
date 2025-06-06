@@ -44,7 +44,17 @@ export default function Dashboard() {
             ))}
           </div>
           {/* Exemplo de lista de plantas para favoritar */}
-          <Favorito addFavorite={addFavorite} />
+          {/* Substitua o objeto abaixo por um plant real conforme necessário */}
+          {/* Exemplo de planta para favoritar */}
+          <Favorito
+            plant={{
+              id: 1,
+              image_url: 'https://via.placeholder.com/150',
+              common_name: 'Planta Exemplo',
+              scientific_name: 'Plantae exemplum'
+            }}
+            addFavorite={addFavorite}
+          />
         </>
       ) : (
         <p>Você não está logado!</p>
