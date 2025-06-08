@@ -10,7 +10,7 @@
 
 ## Deployed app:
 
-[]()
+[SeedsSmart](https://seedsmart-d89o.onrender.com/)
 
 ## Technologies Used
 - **Frontend**:
@@ -27,6 +27,16 @@
 
 - **APIs**:
 - [Trefle API](https://trefle.io/) - Used to obtain detailed information about plants.
+
+## ScreenShoots
+<div>
+  <img src="./screenshot/home.png" alt="home" width="600" height="300">
+  <img src="./screenshot/about.png" alt="about" width="600" height="300">
+  <img src="./screenshot/contact.png" alt="contact" width="600" height="300">
+  <img src="./screenshot/dashboard.png" alt="dashboard" width="600" height="300">
+  <img src="./screenshot/login.png" alt="login" width="600" height="300">
+  <img src="./screenshot/signup.png" alt="signup" width="600" height="300">
+</div> 
 
 ## Installation
 ### Prerequisites
