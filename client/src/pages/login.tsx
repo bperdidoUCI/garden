@@ -1,14 +1,27 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import axios from 'axios';
+import { useMutation } from '@apollo/client';
+import { LOGIN_USER } from '../graphql/mutations';
 import './css/loginsignup.css';
 
-export default function Login() {
-
+const Login: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
+
+  const [login, { loading }] = useMutation(LOGIN_USER, {
+    onCompleted: (data) => {
+      const token = data.login.token;
+      localStorage.setItem('token', token);
+      localStorage.setItem('isLoggedIn', 'true');
+      navigate('/dashboard');
+    },
+    onError: () => {
+      setError('Login error: email ou senha inválidos.');
+    }
+  });
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
@@ -16,16 +29,9 @@ export default function Login() {
       setError('Por favor, preencha todos os campos.');
       return;
     }
-    try {
-      const response = await axios.post<{ token: string }>('/api/login', { email, password });
-      const { token } = response.data;
-      localStorage.setItem('token', token);
-      localStorage.setItem('isLoggedIn', 'true');
-      navigate('/dashboard');
-    } catch (err: any) {
-      setError('Login error: email ou senha inválidos.');
-    }
+    await login({ variables: { email, password } });
   };
+
   return (
     <div className="login-container">
       <h2>Login</h2>
@@ -45,11 +51,15 @@ export default function Login() {
           onChange={e => setPassword(e.target.value)}
           required
         />
-        <button type="submit">Login</button>
+        <button type="submit" disabled={loading}>
+          {loading ? 'Logging in...' : 'Login'}
+        </button>
       </form>
       <p>
         Don't have an account? <Link to="/signup">Sign Up</Link>
       </p>
     </div>
   );
-}
+};
+
+export default Login;

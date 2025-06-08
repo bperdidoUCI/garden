@@ -45,6 +45,7 @@ export default function Contact() {
         setStatus('There was an issue sending your message.');
       }
     } catch (error) {
+      console.log(error)
       setStatus('Error: Unable to send the message.');
     }
   };
