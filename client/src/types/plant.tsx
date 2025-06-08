@@ -1,7 +1,7 @@
 export type Plant = {
-  id: any;
-  _id: any;
-  trefleId: any;
+  id: string;
+  _id: string;
+  trefleId: string;
   image_url: string;
   common_name: string;
   scientific_name: string;
