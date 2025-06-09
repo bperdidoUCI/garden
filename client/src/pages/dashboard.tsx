@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Search from '../pages/search';
 import Favorite from '../pages/favorites';
 
-typePlant = {
+type Plant = {
   image_url: string;
   common_name: string;
   scientific_name: string;
@@ -17,7 +17,7 @@ export default function Dashboard() {
   useEffect(() => {
     const loggedInStatus = localStorage.getItem('isLoggedIn');
     if (loggedInStatus !== 'true') {
-      navigate('/login');
+      navigate('/dashboard');
     } else {
       setIsLoggedIn(true);
 
