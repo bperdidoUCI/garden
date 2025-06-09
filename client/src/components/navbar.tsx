@@ -1,4 +1,5 @@
 // src/components/Nav.tsx
+import { Link } from 'react-router-dom';
 import './css/navbar.css';
 
 export default function Nav() {
@@ -6,19 +7,19 @@ export default function Nav() {
         <nav className="app-nav">
             <ul className="nav-list">
                 <li>
-                    <a className="nav-link" href="/">
+                    <Link className="nav-link" to="/">
                         Home
-                    </a>
+                    </Link>
                 </li>
                 <li>
-                    <a className="nav-link" href="/about">
+                    <Link className="nav-link" to="/about">
                         About
-                    </a>
+                    </Link>
                 </li>
                 <li>
-                    <a className="nav-link" href="/contact">
+                    <Link className="nav-link" to="/contact">
                         Contact
-                    </a>
+                    </Link>
                 </li>
             </ul>
         </nav>

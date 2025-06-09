@@ -34,9 +34,11 @@ export default function About() {
                 </section>
             </main>
 
-            <footer className="app-footer">
-                <p>&copy; 2025 Seedsmart. All rights reserved.</p>
+            <footer className=".app-about-footer">
+                <p>🌱</p>
+                <p className='app-footer'>© 2023 Seedsmart. All rights reserved.</p>
             </footer>
+
         </div>
     );
 }
