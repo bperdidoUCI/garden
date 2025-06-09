@@ -29,7 +29,7 @@ const __dirname = path.dirname(__filename);
 
 const app = express();
 // Server Port
-const PORT = parseInt(process.env.PORT || '4000', 10);
+const PORT = parseInt(process.env.PORT || '10000', 10);
 
 app.use(cors());
 app.use(logger);
