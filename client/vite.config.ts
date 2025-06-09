@@ -4,18 +4,13 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   server: {
-    port: 10000, // Change this to your desired port for the frontend
+    port: 4000, // Change this to your desired port for the frontend
     proxy: {
       '/api': {
-        target: 'http://localhost:4000', // Change this to your backend server URL
+        target: 'http://localhost:10000', // Change this to your backend server URL
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ''),
       },
-    },
-  },
-  build: {
-    rollupOptions: {
-      external: ['emailjs-com'],
     },
   },
 });
