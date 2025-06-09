@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import axios from 'axios';
+import './css/loginsignup.css'
 
 type Plant = {
-  id: number; // o Trefle ID
+  id: number;
   image_url: string;
   common_name: string;
   scientific_name: string;
@@ -10,16 +11,25 @@ type Plant = {
 
 type Props = {
   plant: Plant;
-  addFavorite?: (plant: Plant) => void; // caso use contexto global
 };
 
 export default function Favorite({ plant }: Props) {
-  const [isFavorited, setIsFavorited] = useState(false);  const handleFavorite = async () => {
+  const [isFavorited, setIsFavorited] = useState(false);
+
+  const handleFavorite = async () => {
     try {
-      const token = localStorage.getItem('token');      await axios.post(
+      const token = localStorage.getItem('token');
+      console.log('Token:', token);
+
+      if (!token) {
+        alert('You must be logged in to favorite a plant.');
+        return;
+      }
+
+      const response = await axios.post(
         '/api/favorites',
         {
-          trefleId: plant.id,
+          id: plant.id, // Use id if backend expects this
           common_name: plant.common_name,
           scientific_name: plant.scientific_name,
           image_url: plant.image_url,
@@ -29,42 +39,19 @@ export default function Favorite({ plant }: Props) {
             Authorization: `Bearer ${token}`,
           },
         }
-      );      setIsFavorited(true);
+      );
+      console.log('Response:', response.data);
+      setIsFavorited(true);
       alert('Plant favorited!');
     } catch (err) {
-      console.error(err);
+      console.error('Favorite error:', err);
       alert('Could not favorite');
     }
-  };  return (
-    <button onClick={handleFavorite}>
-      {isFavorited ? ':broken_heart: Remove from Favorites' : ':heart: Add to Favorites'}
+  };
+
+  return (
+    <button className='favorites' onClick={handleFavorite} disabled={isFavorited}>
+      {isFavorited ? '❤️ Favorited' : '🤍 Add to Favorites'}
     </button>
   );
 }
-
-/*
-import { useState } from 'react';
-
-type Plant = {
-    image_url: string;
-    common_name: string;
-    scientific_name: string;
-};
-
-export default function Favorite({ plant, addFavorite }: { plant: Plant; addFavorite: (plant: Plant) => void }) {
-    const [isFavorited, setIsFavorited] = useState(false);
-
-    const handleFavoriteClick = () => {
-        setIsFavorited(!isFavorited);
-        if (!isFavorited) {
-            addFavorite(plant);
-        }
-    };
-
-    return (
-        <button onClick={handleFavoriteClick}>
-            {isFavorited ? 'Remove from Favorites' : 'Add to Favorites'}
-        </button>
-    );
-}
-*/

@@ -1,4 +1,3 @@
-
 /* Search Bar */
 /* 🔍 Search form */
 .search-form {
@@ -8,6 +7,20 @@
   margin: 2rem auto;
   gap: 0.5rem;
   flex-wrap: wrap;
+}
+.title-search-bar {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.box {
+  display: flex;
+  justify-content: center; /* centraliza horizontal */
+  align-items: center; /* centraliza vertical */
+  height: 200px; /* necessário pra centralização vertical */
+  border: 1px solid red;
 }
 
 .search-input {
