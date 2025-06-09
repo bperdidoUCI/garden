@@ -1,100 +1,112 @@
 .login-container,
 .signup-container {
-    max-width: 400px;
-    width: 90%;
-    margin: 5rem auto;
-    /* distância do topo e centralizado horizontalmente */
-    padding: 2rem 6.5rem;
-    background-color: #FFFFFF;
-    /* caixa branca */
-    border-radius: 16px;
-    /* bordas arredondadas maiores */
-    box-shadow: 0 8px 24px rgba(46, 77, 58, 0.15);
-    /* sombra leve */
-    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-    color: #2E4D3A;
-    text-align: center;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  max-width: 400px;
+  width: 90%;
+  margin: 5rem auto;
+  padding: 2rem 6.5rem;
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(46, 77, 58, 0.15);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: #2e4d3a;
+  text-align: center;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-/* Título */
+.favorites{
+  display: flex;
+  cursor: pointer;
+  max-width: 500px;
+  width: 50%;
+  margin: 5rem auto;
+  padding: 1rem;
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(46, 77, 58, 0.15);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: #2e4d3a;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+/* Title */
 .login-container h2,
 .signup-container h2 {
-    margin-bottom: 1.8rem;
-    font-weight: 700;
-    font-size: 2rem;
-    color: #3E6640;
+  margin-bottom: 1.8rem;
+  font-weight: 700;
+  font-size: 2rem;
+  color: #3e6640;
 }
 
 /* Inputs */
 .login-container input,
 .signup-container input {
-    width: 100%;
-    padding: 0.65rem 1.2rem;
-    margin-bottom: 1.2rem;
-    border: 2px solid #4CAF50;
-    border-radius: 10px;
-    font-size: 1.05rem;
-    transition: border-color 0.3s ease;
+  width: 100%;
+  padding: 0.65rem 1.2rem;
+  margin-bottom: 1.2rem;
+  border: 2px solid #4caf50;
+  border-radius: 10px;
+  font-size: 1.05rem;
+  transition: border-color 0.3s ease;
 }
 
 .login-container input:focus,
 .signup-container input:focus {
-    outline: none;
-    border-color: #3E6640;
+  outline: none;
+  border-color: #3e6640;
 }
 
-/* Botão */
+/* Button */
 .login-container button,
 .signup-container button {
-    width: 100%;
-    background-color: #4CAF50;
-    color: white;
-    padding: 0.85rem;
-    font-size: 1.15rem;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    font-weight: 600;
-    transition: background-color 0.3s ease;
-    margin-top: 1rem;
+  width: 100%;
+  background-color: #4caf50;
+  color: white;
+  padding: 0.85rem;
+  font-size: 1.15rem;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+  margin-top: 1rem;
 }
 
 .login-container button:hover,
 .signup-container button:hover {
-    background-color: #3E6640;
+  background-color: #3e6640;
 }
 
-/* Mensagem de erro */
+/* Error message */
 .error-message,
 .login-container p[style],
 .signup-container p[style] {
-    color: #CC3333;
-    font-weight: 600;
-    margin-bottom: 1rem;
+  color: #cc3333;
+  font-weight: 600;
+  margin-bottom: 1rem;
 }
 
-/* Texto para links */
+/* Link Texts */
 .login-container p,
 .signup-container p {
-    margin-top: 1.3rem;
-    font-size: 1rem;
-    color: #2E4D3A;
+  margin-top: 1.3rem;
+  font-size: 1rem;
+  color: #2e4d3a;
 }
 
 .login-container p a,
 .signup-container p a {
-    color: #4CAF50;
-    text-decoration: none;
-    font-weight: 600;
-    transition: color 0.3s ease;
+  color: #4caf50;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s ease;
 }
 
 .login-container p a:hover,
 .signup-container p a:hover {
-    color: #3E6640;
-    text-decoration: underline;
+  color: #3e6640;
+  text-decoration: underline;
 }

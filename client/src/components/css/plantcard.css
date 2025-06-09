@@ -77,14 +77,14 @@ body {
   max-width: 400px;
 }
 
-.title-header1{
+.title-header1 {
   font-size: 1.5rem;
   color: #3e6640;
   margin-bottom: 0.5rem;
   text-align: center;
 }
 
-.auth-button{
+.auth-button {
   background-color: #4caf50;
   color: white;
   border: none;

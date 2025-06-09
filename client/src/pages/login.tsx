@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { useMutation } from '@apollo/client';
-import { LOGIN_USER } from '../graphql/mutations';
-import './css/loginsignup.css';
+import axios from 'axios';
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -10,26 +8,25 @@ const Login: React.FC = () => {
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
-  const [login, { loading }] = useMutation(LOGIN_USER, {
-    onCompleted: (data) => {
-      const token = data.login.token;
-      localStorage.setItem('token', token);
-      localStorage.setItem('isLoggedIn', 'true');
-      navigate('/dashboard');
-    },
-    onError: () => {
-      setError('Login error: email ou senha inválidos.');
-    }
-  });
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
     if (!email || !password) {
-      setError('Por favor, preencha todos os campos.');
+      setError('Please, fill in all fields.');
       return;
     }
-    await login({ variables: { email, password } });
+    try {
+      interface LoginResponse {
+        token: string;
+        // add other fields if needed
+      }
+      const res = await axios.post<LoginResponse>('/api/login', { email, password });
+      localStorage.setItem('token', res.data.token);
+      localStorage.setItem('isLoggedIn', 'true');
+      navigate('/dashboard');
+    } catch (err) {
+      setError('Login error: email or password invalids.');
+    }
   };
 
   return (
@@ -43,6 +40,7 @@ const Login: React.FC = () => {
           value={email}
           onChange={e => setEmail(e.target.value)}
           required
+          autoComplete="email"
         />
         <input
           type="password"
@@ -50,10 +48,9 @@ const Login: React.FC = () => {
           value={password}
           onChange={e => setPassword(e.target.value)}
           required
+          autoComplete="current-password"
         />
-        <button type="submit" disabled={loading}>
-          {loading ? 'Logging in...' : 'Login'}
-        </button>
+        <button type="submit">Login</button>
       </form>
       <p>
         Don't have an account? <Link to="/signup">Sign Up</Link>

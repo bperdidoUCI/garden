@@ -8,7 +8,7 @@ import { searchPlants } from '../utils/trefleAPI.js';
 
 const createToken = (user: any) => {
   return jwt.sign({ _id: user._id, email: user.email }, process.env.JWT_SECRET!, {
-    expiresIn: "7d", 
+    expiresIn: "7d",
   });
 };
 
@@ -33,17 +33,27 @@ const resolvers = {
     searchPlants: async (_parent: any, { query }: { query: string }) => {
       return searchPlants(query);
     },
+
   },
 
   Mutation: {
     register: async (_parent: any, { username, email, password }: any) => {
-      const existing = await User.findOne({ email });
-      if (existing) throw new Error('User already exists with this email');
-      const user = await User.create({ username, email, password });
-      const token = createToken(user);
-      return { ...user.toObject(), token };
+      try {
+        const existing = await User.findOne({ email });
+        if (existing) throw new Error('User already exists with this email');
+
+        const user = new User({ username, email, password });
+        await user.save();
+
+        const token = createToken(user);
+        return { ...user.toObject(), token };
+      } catch (err) {
+        console.error('Register error:', err);
+        throw err;
+      }
     },
-    login: async (_parent: any, {email, password }: any) => {
+
+    login: async (_parent: any, { email, password }: any) => {
       const user = await User.findOne({ email });
       if (!user) throw new Error('User not found');
       const valid = await user.comparePassword(password);
