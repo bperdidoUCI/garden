@@ -80,8 +80,7 @@ cd client
 npm install
 npm run dev
 ```
-
-Now you can access the frontend at http://localhost:3000 and the backend will be running on the GraphQL API at http://localhost:4000/graphql.
+Now you can access the frontend at http://localhost:3000 and the backend will be running on the GraphQL API at http://localhost:10000/graphql.
 
 ## Project Structure
 

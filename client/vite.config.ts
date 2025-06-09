@@ -4,14 +4,18 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   server: {
-    port: 5173,
-    open: true,
+    port: 10000,
     proxy: {
-      '/graphql': {
+      '/api': {
         target: 'http://localhost:10000',
         changeOrigin: true,
-        secure: false,
-      }
-    }
-  }
-})
+        rewrite: (path) => path.replace(/^\/api/, ''),
+      },
+    },
+  },
+  build: {
+    rollupOptions: {
+      external: ['emailjs-com'],
+    },
+  },
+});
