@@ -1,5 +1,4 @@
 import jwt from 'jsonwebtoken';
-import bcrypt from 'bcryptjs';
 import User from '../models/User.js';
 import SavedPlant from '../models/SavedPlant.js';
 import JournalEntry from '../models/JournalEntry.js';
@@ -7,9 +6,12 @@ import { searchPlants } from '../utils/trefleAPI.js';
 
 
 const createToken = (user: any) => {
-  return jwt.sign({ _id: user._id, email: user.email }, process.env.JWT_SECRET!, {
-    expiresIn: "7d",
-  });
+  console.log('JWT_SECRET:', process.env.JWT_SECRET);
+  return jwt.sign(
+    { id: user._id, email: user.email, username: user.username },
+    process.env.JWT_SECRET as string,
+    { expiresIn: '2h' }
+  );
 };
 
 const resolvers = {
@@ -41,18 +43,21 @@ const resolvers = {
       try {
         const existing = await User.findOne({ email });
         if (existing) throw new Error('User already exists with this email');
-
+        
         const user = new User({ username, email, password });
-        await user.save();
+        const savedUser = await user.save();
 
-        const token = createToken(user);
-        return { ...user.toObject(), token };
+        if (!savedUser) throw new Error('User not created');
+
+        const token = createToken(savedUser);
+        if (!token) throw new Error('Token generation failed');
+
+        return { ...savedUser.toObject(), token };
       } catch (err) {
         console.error('Register error:', err);
         throw err;
       }
     },
-
     login: async (_parent: any, { email, password }: any) => {
       const user = await User.findOne({ email });
       if (!user) throw new Error('User not found');
