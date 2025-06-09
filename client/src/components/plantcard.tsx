@@ -5,6 +5,8 @@ import { SEARCH_PLANTS } from '../graphql/queries';
 import Footer from './footer';
 import Search from '../pages/search';
 import './css/plantcard.css';
+import About from './aboutcard';
+import Contact from './contact';
 
 type Plant = {
   id: string;
@@ -124,7 +126,8 @@ export default function PlantCard(_onSearch: PlantCardProps): JSX.Element {
           )}
         </section>
       </main>
-
+      <About />
+      <Contact />
       <Footer />
     </div>
   );

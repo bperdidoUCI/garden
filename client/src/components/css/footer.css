@@ -6,3 +6,14 @@
   color: #1b3b2f;
   font-weight: bold;
 }
+
+.app-about-footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #76c893;
+  text-align: center;
+  padding: 1rem;
+  color: #1b3b2f;
+  font-weight: bold;
+}
