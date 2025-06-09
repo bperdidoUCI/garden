@@ -2,6 +2,15 @@
 import './css/contact.css';
 import { useState } from 'react';
 import Footer from './footer';
+import emailjs from 'emailjs-com';
+
+// Pegando as variáveis do .env (lembre de prefixar com VITE_)
+const PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+const SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+const TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+
+// Inicializa EmailJS só uma vez fora do componente
+emailjs.init(PUBLIC_KEY);
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -20,33 +29,32 @@ export default function Contact() {
     }));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
-    // Simple form validation
+
     if (!formData.name || !formData.email || !formData.message) {
       setStatus('Please fill all the fields.');
       return;
     }
 
-    try {
-      const response = await fetch('/api/contact', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
-      
-      if (response.ok) {
+    const templateParams = {
+      user_name: formData.name,
+      user_email: formData.email,
+      message: formData.message,
+      to_email: import.meta.env.VITE_EMAILJS_TO_EMAIL
+    };
+
+    emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams)
+      .then((response) => {
+        console.log('SUCCESS!', response.status, response.text);
         setStatus('Thank you for your message!');
         setFormData({ name: '', email: '', message: '' });
-      } else {
-        setStatus('There was an issue sending your message.');
-      }
-    } catch (error) {
-      setStatus('Error: Unable to send the message.');
-    }
+      })
+      .catch((err) => {
+        console.error('FAILED...', err);
+        setStatus(`There was an issue sending your message: ${err.text || err.message || JSON.stringify(err)}`);
+      });
+
   };
 
   return (

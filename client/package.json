@@ -3,23 +3,29 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "proxy": "http://localhost:10000",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },
   "dependencies": {
     "@apollo/client": "^3.13.8",
+    "axios": "^1.9.0",
     "graphql": "^16.11.0",
     "react": "^19.1.0",
-    "react-dom": "^19.1.0"
+    "react-dom": "^19.1.0",
+    "react-router-dom": "^7.6.2",
+    "use-debounce": "^10.0.5"
   },
   "devDependencies": {
     "@eslint/js": "^9.25.0",
+    "@types/axios": "^0.9.36",
     "@types/node": "^22.15.24",
     "@types/react": "^19.1.6",
     "@types/react-dom": "^19.1.5",
+    "@types/react-router-dom": "^5.3.3",
     "@vitejs/plugin-react": "^4.5.0",
     "eslint": "^9.25.0",
     "eslint-plugin-react-hooks": "^5.2.0",
