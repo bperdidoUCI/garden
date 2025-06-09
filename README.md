@@ -74,10 +74,14 @@ cd seedsmart
 bash
 cd server
 npm install
+npx tsc
+npm run start
 
 cd ..
 cd client
 npm install
+npm install react-router-dom
+npm install --save-dev @types/react-router-dom
 npm run dev
 ```
 Now you can access the frontend at http://localhost:3000 and the backend will be running on the GraphQL API at http://localhost:10000/graphql.
