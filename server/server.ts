@@ -43,9 +43,10 @@ app.post('/api/signup', signup);
 app.use('/api/favorites', favoriteRoutes);
 
 // Serve o frontend SPA no final (após rotas de API)
-app.use(express.static(path.join(__dirname, '../client/dist')));
+const staticPath = path.resolve(__dirname, '../client/dist');
+app.use(express.static(staticPath));
 app.get('*', (_req, res) => {
-  res.sendFile(path.join(__dirname, '../client/dist/index.html'));
+  res.sendFile(path.join(staticPath, 'index.html'));
 });
 // Apollo Server setup
 const server = new ApolloServer({
