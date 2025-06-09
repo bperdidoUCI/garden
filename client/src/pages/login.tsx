@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import axios from 'axios';
+import { useMutation } from '@apollo/client';
+import { LOGIN_USER } from '../graphql/mutations';
+import './css/loginsignup.css';
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -8,25 +10,27 @@ const Login: React.FC = () => {
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError('');
-    if (!email || !password) {
-      setError('Please, fill in all fields.');
-      return;
-    }
-    try {
-      interface LoginResponse {
-        token: string;
-        // add other fields if needed
-      }
-      const res = await axios.post<LoginResponse>('/api/login', { email, password });
-      localStorage.setItem('token', res.data.token);
+  const [login, { loading }] = useMutation(LOGIN_USER, {
+    onCompleted: (data) => {
+      localStorage.setItem('token', data.login.token);
       localStorage.setItem('isLoggedIn', 'true');
       navigate('/dashboard');
-    } catch (err) {
-      setError('Login error: email or password invalids.');
+    },
+    onError: (error) => {
+      setError(error.message || 'Login failed');
+    },
+  });
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setError('');
+
+    if (!email || !password) {
+      setError('Please fill in all fields.');
+      return;
     }
+
+    login({ variables: { email, password } });
   };
 
   return (
@@ -44,16 +48,18 @@ const Login: React.FC = () => {
         />
         <input
           type="password"
-          placeholder="Senha"
+          placeholder="Password"
           value={password}
           onChange={e => setPassword(e.target.value)}
           required
           autoComplete="current-password"
         />
-        <button type="submit">Login</button>
+        <button type="submit" disabled={loading}>
+          {loading ? 'Logging in...' : 'Login'}
+        </button>
       </form>
       <p>
-        Don't have an account? <Link to="/signup">Sign Up</Link>
+        Don’t have an account? <Link to="/signup">Sign Up</Link>
       </p>
     </div>
   );
