@@ -63,7 +63,7 @@ const startServer = async () => {
   try {
     await connectDB();
     await server.start();
-    server.applyMiddleware({ app });
+    server.applyMiddleware({ app, path: '/graphql' });
 
     app.listen(PORT, () => {
       console.log(`🚀 Server ready at http://localhost:${PORT}${server.graphqlPath}`);
