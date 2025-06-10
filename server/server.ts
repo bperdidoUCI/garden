@@ -46,12 +46,12 @@ app.post('/api/login', login);
 app.post('/api/signup', signup);
 app.use('/api/favorites', favoriteRoutes);
 
-// Serve o frontend SPA no final (após rotas de API)
-const staticPath = path.resolve(__dirname, '../client/dist');
-app.use(express.static(staticPath));
-app.get('*', (_req, res) => {
-  res.sendFile(path.join(staticPath, 'index.html'));
-});
+// // Serve o frontend SPA no final (após rotas de API)
+// const staticPath = path.resolve(__dirname, '../client/dist');
+// app.use(express.static(staticPath));
+// app.get('*', (_req, res) => {
+//   res.sendFile(path.join(staticPath, 'index.html'));
+// });
 // Apollo Server setup
 const server = new ApolloServer({
   typeDefs,
@@ -64,6 +64,12 @@ const startServer = async () => {
     await connectDB();
     await server.start();
     server.applyMiddleware({ app, path: '/graphql' });
+
+    const staticPath = path.resolve(__dirname, '../client/dist');
+    app.use(express.static(staticPath));
+    app.get('*', (_req, res) => {
+      res.sendFile(path.join(staticPath, 'index.html'));
+    });
 
     app.listen(PORT, () => {
       console.log(`🚀 Server ready at http://localhost:${PORT}${server.graphqlPath}`);
