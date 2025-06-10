@@ -31,7 +31,11 @@ const app = express();
 // Server Port
 const PORT = parseInt(process.env.PORT || '10000', 10);
 
-app.use(cors());
+app.use(cors(
+  {
+    origin: '*',
+  }
+));
 app.use(logger);
 app.use(express.json());
 
