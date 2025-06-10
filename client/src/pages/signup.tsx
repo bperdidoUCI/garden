@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import { useMutation } from '@apollo/client';
+import { REGISTER_USER } from '../graphql/mutations';
 import './css/loginsignup.css';
 
 const Signup: React.FC = () => {
@@ -7,43 +9,28 @@ const Signup: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+
+  const [register, { loading }] = useMutation(REGISTER_USER, {
+    onCompleted: (data) => {
+      const token = data.register.token;
+      localStorage.setItem('token', token);
+      localStorage.setItem('isLoggedIn', 'true');
+      navigate('/dashboard');
+    },
+    onError: () => {
+      setError('Signup error: Email is invalid.');
+    }
+  });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
-
     if (!username || !email || !password) {
-      setError('Please, fill in all fields.');
+      setError('Please fill in all fields.');
       return;
     }
-
-    setLoading(true);
-
-    try {
-      const res = await fetch('http://localhost:10000/api/signup', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, email, password }),
-      });
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        setError(data.message || 'Signup failed');
-        setLoading(false);
-        return;
-      }
-
-      // Espera que o backend retorne o token JWT ao criar o usuário:
-      localStorage.setItem('token', data.token);
-      localStorage.setItem('isLoggedIn', 'true');
-      navigate('/dashboard');
-    } catch (err) {
-      setError('Server error. Try again later.');
-      setLoading(false);
-    }
+    await register({ variables: { username, email, password } });
   };
 
   return (
@@ -67,7 +54,7 @@ const Signup: React.FC = () => {
         />
         <input
           type="password"
-          placeholder="Senha"
+          placeholder="Password"
           value={password}
           onChange={e => setPassword(e.target.value)}
           required
@@ -77,7 +64,7 @@ const Signup: React.FC = () => {
         </button>
       </form>
       <p>
-        Do you have an account? <Link to="/login">Login</Link>
+        Already have an account? <Link to="/login">Login</Link>
       </p>
     </div>
   );

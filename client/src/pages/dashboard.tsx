@@ -28,12 +28,15 @@ export default function Dashboard() {
     }
   }, [navigate]);
 
-
+  const handleSearch = (query: string) => {
+    console.log('Dashboard search query:', query);
+    // Optionally handle search logic here
+  };
 
   return (
     <div className="dashboard-container">
       <h2>Welcome to your Dashboard</h2>
-      <Search />
+      <Search onSearch={handleSearch} />
 
       {isLoggedIn ? (
         <>
@@ -52,7 +55,6 @@ export default function Dashboard() {
             <p>You have not added plants to your favorites yet.</p>
           )}
 
-          {/* Example of using a favorite component, if you want to show a fixed card */}
           <Favorite
             plant={{
               id: 1,

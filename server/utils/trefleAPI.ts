@@ -6,7 +6,7 @@ const BASE_URL = 'https://trefle.io/api/v1';
 const TOKEN = process.env.TREFLE_TOKEN;
 
 export const searchPlants = async (query: string) => {
-  const url = `${BASE_URL}/species/search?token=${TOKEN}&q=${encodeURIComponent(query)}`;
+  const url = `${BASE_URL}/plants?token=${TOKEN}&q=${encodeURIComponent(query)}`;
 
   try {
     const response = await fetch(url);
