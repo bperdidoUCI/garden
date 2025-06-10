@@ -1,12 +1,13 @@
-import { useState, useEffect, type JSX } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useLazyQuery } from '@apollo/client';
 import { SEARCH_PLANTS } from '../graphql/queries';
-import Footer from './footer';
+import Footer from '../components/footer';
+// import Search from '../search';
 import Search from '../pages/search';
+import About from '../components/aboutcard';
+import Contact from '../components/contact';
 import './css/plantcard.css';
-import About from './aboutcard';
-import Contact from './contact';
 
 type Plant = {
   id: string;
@@ -15,7 +16,6 @@ type Plant = {
   scientific_name: string;
 };
 
-
 const plantsMock: Plant[] = [
   {
     id: '1',
@@ -23,44 +23,16 @@ const plantsMock: Plant[] = [
     common_name: 'Epacris Corymbiflora',
     scientific_name: 'Epacris corymbiflora',
   },
-  // ...other mocks
 ];
-interface PlantCardProps {
-  onSearch?: (query: string) => void;
-}
 
-interface SearchPlantsData {
-  searchPlants: Plant[];
-}
-
-interface SearchPlantsVars {
-  query: string;
-}
-
-export default function PlantCard(_onSearch: PlantCardProps): JSX.Element {
+export default function PlantCard() {
   const [plants, setPlants] = useState<Plant[]>([]);
-  const [errorMessage, setErrorMessage] = useState<string>('');
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
 
-  // Set up the useLazyQuery to search plants
-  const [, { loading }] = useLazyQuery<SearchPlantsData, SearchPlantsVars>(SEARCH_PLANTS, {
-    onCompleted: (data: SearchPlantsData) => {
-      if (!data || data.searchPlants.length === 0) {
-        setErrorMessage('No plants found');
-        setPlants([]);
-      } else {
-        setErrorMessage('');
-        setPlants(data.searchPlants);
-      }
-    },
-    onError: () => {
-      setErrorMessage('Error fetching plant');
-      setPlants([]);
-    },
-  });
+  const [searchPlants, { data, loading, error }] = useLazyQuery(SEARCH_PLANTS);
 
-  // When the component mounts, it shows the plan of the day and checks login
   useEffect(() => {
     const today = new Date();
     const dayOfYear = Math.floor(
@@ -72,19 +44,36 @@ export default function PlantCard(_onSearch: PlantCardProps): JSX.Element {
     setIsLoggedIn(localStorage.getItem('isLoggedIn') === 'true');
   }, []);
 
-  ///Logout - clears localStorage and returns to home
-  const handleLogout = (): void => {
+  useEffect(() => {
+    if (data?.searchPlants) {
+      if (data.searchPlants.length === 0) {
+        setErrorMessage('No plants found');
+        setPlants([]);
+      } else {
+        setErrorMessage('');
+        setPlants(data.searchPlants);
+      }
+    }
+    if (error) {
+      setErrorMessage('Error fetching plant');
+      setPlants([]);
+    }
+  }, [data, error]);
+
+  const handleLogout = () => {
     localStorage.removeItem('token');
     localStorage.setItem('isLoggedIn', 'false');
     setIsLoggedIn(false);
     navigate('/');
   };
 
-  // Function that is called by SearchBar to search for plants
+  const handleSearch = useCallback((query: string) => {
+  searchPlants({ variables: { query } });
+}, [searchPlants]);
 
   return (
     <div className="plantcard-container">
-      <Search />
+      <Search onSearch={handleSearch} />
       <header className="app-header header1">
         <div className="header-content1">
           <h4 className="title-header1">Save your Favorites Searches 😍</h4>
@@ -110,7 +99,7 @@ export default function PlantCard(_onSearch: PlantCardProps): JSX.Element {
             <p>No plants found or error occurred.</p>
           ) : (
             <div className="plant-card">
-              {plants.map((plant: Plant) => (
+              {plants.map((plant) => (
                 <div key={plant.id} className="plant-content">
                   <img src={plant.image_url} alt={plant.common_name} className="plant-image" />
                   <p className="plant-name"><strong>{plant.common_name}</strong></p>
@@ -132,3 +121,4 @@ export default function PlantCard(_onSearch: PlantCardProps): JSX.Element {
     </div>
   );
 }
+

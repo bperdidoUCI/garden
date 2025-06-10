@@ -12,25 +12,24 @@ const Login: React.FC = () => {
 
   const [login, { loading }] = useMutation(LOGIN_USER, {
     onCompleted: (data) => {
-      localStorage.setItem('token', data.login.token);
+      const token = data.login.token;
+      localStorage.setItem('token', token);
       localStorage.setItem('isLoggedIn', 'true');
       navigate('/dashboard');
     },
-    onError: (error) => {
-      setError(error.message || 'Login failed');
-    },
+    onError: () => {
+      setError('Login error: email is invalid or password is incorrect.');
+    }
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
-
     if (!email || !password) {
       setError('Please fill in all fields.');
       return;
     }
-
-    login({ variables: { email, password } });
+    await login({ variables: { email, password } });
   };
 
   return (
@@ -44,7 +43,6 @@ const Login: React.FC = () => {
           value={email}
           onChange={e => setEmail(e.target.value)}
           required
-          autoComplete="email"
         />
         <input
           type="password"
@@ -52,14 +50,13 @@ const Login: React.FC = () => {
           value={password}
           onChange={e => setPassword(e.target.value)}
           required
-          autoComplete="current-password"
         />
         <button type="submit" disabled={loading}>
           {loading ? 'Logging in...' : 'Login'}
         </button>
       </form>
       <p>
-        Don’t have an account? <Link to="/signup">Sign Up</Link>
+        Don't have an account? <Link to="/signup">Sign Up</Link>
       </p>
     </div>
   );
